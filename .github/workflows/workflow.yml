@@ -19,11 +19,11 @@ jobs:
       #     sed -i "s|token:|token: ${{ secrets.CHECKMARX_JIRA_TOKEN }}|g" checkmarx/application.yaml
       #     cat checkmarx/application.yaml
 
-       - name: Setup Environment Variables
-          run: |
-            sed -i "s|password:|password: lunara|g" checkmarx/application.yaml
-            sed -i "s|token:|token: lunara-token|g" checkmarx/application.yaml
-            cat checkmarx/application.yaml
+      - name: Setup Environment Variables
+        run: |
+          sed -i "s|password:|password: lunara|g" checkmarx/application.yaml
+          sed -i "s|token:|token: lunara-token|g" checkmarx/application.yaml
+          cat checkmarx/application.yaml
 
       - name: Verify placeholders in application.yaml
         run: |
