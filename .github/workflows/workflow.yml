@@ -24,4 +24,4 @@ jobs:
 
       - name: Execute CxSAST Scan using CxFlow
         run: |
-          cd checkmarx/ && ./cx-scan.sh
+          cd checkmarx/ && chmod 755 cx-scan.sh && ./cx-scan.sh
