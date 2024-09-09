@@ -1,0 +1,27 @@
+name: Checkmarx Scan
+
+on:
+  push:
+    branches:
+      - main  # Specify the branches on which the workflow should run
+
+jobs:
+  timber_run_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Environment Variables
+        run: |
+          sed -i "s|password:|password: ${{ secrets.CHECKMARX_PW }}|g" checkmarx/application.yaml
+          sed -i "s|token:|token: ${{ secrets.CHECKMARX_JIRA_TOKEN }}|g" checkmarx/application.yaml
+
+      - name: Install CxFlow Plugin
+        run: |
+          wget -O checkmarx/cxflow.jar https://github.com/checkmarx-ltd/cx-flow/releases/download/1.6.39/cx-flow-1.6.39-java11.jar && chmod +rwx checkmarx/cxflow.jar
+
+      - name: Execute CxSAST Scan using CxFlow
+        run: |
+          cd checkmarx/ && ./cx-scan.sh
