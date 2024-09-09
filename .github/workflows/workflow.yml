@@ -13,10 +13,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Setup Environment Variables
-      #   run: |
-      #     sed -i "s|password:|password: ${{ secrets.CHECKMARX_PW }}|g" checkmarx/application.yaml
-      #     sed -i "s|token:|token: ${{ secrets.CHECKMARX_JIRA_TOKEN }}|g" checkmarx/application.yaml
+      - name: Setup Environment Variables
+        run: |
+          sed -i "s|password:|password: ${{ secrets.CHECKMARX_PW }}|g" checkmarx/application.yaml
+          sed -i "s|token:|token: ${{ secrets.CHECKMARX_JIRA_TOKEN }}|g" checkmarx/application.yaml
+
+      - name: Verify placeholders in application.yaml
+        run: |
+          grep "password:" checkmarx/application.yaml
+          grep "token:" checkmarx/application.yaml
+
+      - name: print 
+        run: cat checkmarx/application.yaml
 
       - name: Install CxFlow Plugin
         run: |
